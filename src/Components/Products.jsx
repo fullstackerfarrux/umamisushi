@@ -19,13 +19,13 @@ const Products = () => {
     tg.MainButton.hide();
 
     async function get() {
-      await fetch("http://localhost:4001/products", {
+      await fetch("https://api.umamisushibot.uz/products", {
         method: "GET",
       })
         .then((res) => res.json())
         .then((data) => setProducts(data.products));
 
-      await fetch("http://localhost:4001/categories", {
+      await fetch("https://api.umamisushibot.uz/categories", {
         method: "GET",
       })
         .then((res) => res.json())

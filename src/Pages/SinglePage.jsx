@@ -27,7 +27,7 @@ const SinglePage = () => {
         setCount(find?.count);
       }
 
-      await fetch("http://localhost:4001/product", {
+      await fetch("https://api.umamisushibot.uz/product", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
