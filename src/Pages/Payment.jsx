@@ -23,15 +23,18 @@ const Payment = () => {
       count: p.count,
     }));
 
+    let total =
+      typePut == "Доставка"
+        ? (cart.total + 19000).toLocaleString()
+        : cart.total.toLocaleString();
+
     let res = {
       order_products: result,
-      total: `${cart.total.toLocaleString()}`,
+      total,
       delivery: typePut,
       payment: typePayment,
       comment: comment,
     };
-
-    console.log(res);
 
     tg.sendData(JSON.stringify(res));
 
@@ -80,6 +83,7 @@ const Payment = () => {
             className={typePut == "Самовызов" ? "pickup" : "pickup-notactive"}
             onClick={() => {
               setTypePut("Самовызов");
+              onSendData();
             }}
           >
             Самовызов
