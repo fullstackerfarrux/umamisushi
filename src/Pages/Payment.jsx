@@ -20,19 +20,18 @@ const Payment = () => {
       product_id: p.product.product_id,
       product_name: p.product.title,
       price: `${p.product.price.toLocaleString()}`,
-      sale_price: `${p.product.discount_price.toLocaleString()}`,
       count: p.count,
     }));
 
     let res = {
       order_products: result,
       total: `${cart.total.toLocaleString()}`,
-      undiscount: `${cart.undiscount.toLocaleString()}`,
-      discount: `${(cart.undiscount - cart.total).toLocaleString()}`,
       delivery: typePut,
       payment: typePayment,
       comment: comment,
     };
+
+    console.log(res);
 
     tg.sendData(JSON.stringify(res));
 
@@ -58,6 +57,7 @@ const Payment = () => {
       color: "#E30016",
       text_color: "#fff",
       text: `Оплатить`,
+      cursor: "pointer",
     });
     tg.MainButton.show();
   }, []);
@@ -71,6 +71,7 @@ const Payment = () => {
             className={typePut == "Доставка" ? "courier" : "courier-notactive"}
             onClick={() => {
               setTypePut("Доставка");
+              onSendData();
             }}
           >
             Доставка курьером по Ташкенту
