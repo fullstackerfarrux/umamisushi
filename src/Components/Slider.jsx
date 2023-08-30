@@ -9,13 +9,7 @@ const Slider = () => {
     <div className="container embla" ref={emblaRef}>
       <div className="embla__container">
         <img
-          src="./sushi.png"
-          className="embla__slide"
-          width={350}
-          height={140}
-        />
-        <img
-          src="/sushi2.png"
+          src="./bannerumami.png"
           className="embla__slide"
           width={350}
           height={140}
