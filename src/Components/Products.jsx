@@ -83,7 +83,7 @@ const Products = () => {
                 <Link to={`/single-product/${p.product_id}`}>
                   <img
                     src={p.images[0]}
-                    width={170}
+                    width={"100%"}
                     alt="collagen"
                     style={{
                       cursor: "pointer",
