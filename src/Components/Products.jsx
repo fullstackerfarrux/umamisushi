@@ -75,6 +75,7 @@ const Products = () => {
           </div>
         ))}
       </div>
+
       {products.length > 0 ? (
         <div className="products">
           {products.map((p, index) =>
@@ -144,7 +145,22 @@ const Products = () => {
           )}
         </div>
       ) : (
-        ""
+        <div className="flex">
+          <div className="loading">
+            <div className="card__image"></div>
+            <div className="card__content">
+              <h2></h2>
+              <p></p>
+            </div>
+          </div>
+          <div className="loading">
+            <div className="card__image"></div>
+            <div className="card__content">
+              <h2></h2>
+              <p></p>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
