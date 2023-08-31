@@ -74,7 +74,6 @@ const Payment = () => {
             className={typePut == "Доставка" ? "courier" : "courier-notactive"}
             onClick={() => {
               setTypePut("Доставка");
-              onSendData();
             }}
           >
             Доставка курьером по Ташкенту
@@ -83,7 +82,6 @@ const Payment = () => {
             className={typePut == "Самовызов" ? "pickup" : "pickup-notactive"}
             onClick={() => {
               setTypePut("Самовызов");
-              onSendData();
             }}
           >
             Самовызов
