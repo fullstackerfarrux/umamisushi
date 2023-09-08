@@ -59,7 +59,7 @@ const Payment = () => {
     tg.MainButton.setParams({
       color: "#E30016",
       text_color: "#fff",
-      text: `Оплатить`,
+      text: `Заказать`,
       cursor: "pointer",
     });
     tg.MainButton.show();
