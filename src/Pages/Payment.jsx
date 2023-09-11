@@ -8,6 +8,8 @@ const Payment = () => {
   const [comment, setComment] = useState("");
   const [typePut, setTypePut] = useState("Доставка");
   const [typePayment, setTypePayment] = useState("Наличные");
+  const [findPromo, setFindPromo] = useState(0);
+  const [sale, setSale] = useState(0);
   const tg = window.Telegram.WebApp;
 
   const handleComment = (e) => {
@@ -25,8 +27,8 @@ const Payment = () => {
 
     let total =
       typePut == "Доставка"
-        ? (cart.total + 19000).toLocaleString()
-        : cart.total.toLocaleString();
+        ? (cart.total + sale + 19000).toLocaleString()
+        : (cart.total + sale).toLocaleString();
 
     let res = {
       order_products: result,
@@ -64,6 +66,24 @@ const Payment = () => {
     });
     tg.MainButton.show();
   }, []);
+
+  const checkPromocode = (promo) => {
+    setTimeout(async () => {
+      await fetch("https://api.umamisushibot.uz/promo/get", {
+        method: "GET",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          data.data.find((p, index) => p.title == promo) !== undefined
+            ? (setFindPromo(data.data.find((p, index) => p.title == promo)),
+              setSale(
+                cart.total *
+                  `0.${data.data.find((p, index) => p.title == promo).sale}`
+              ))
+            : (setFindPromo(1), setSale(0));
+        });
+    }, 400);
+  };
 
   return (
     <>
@@ -107,6 +127,30 @@ const Payment = () => {
           </button>
         </div>
 
+        <div className="promocode">
+          <input
+            type="text"
+            className="promo"
+            placeholder="Введите промокод"
+            onChange={(e) => checkPromocode(e.target.value)}
+          />
+          {findPromo == 0 ? (
+            ""
+          ) : findPromo == 1 ? (
+            <p style={{ marginLeft: 10, color: "red", marginTop: 10 }}>
+              Промокод не найден
+            </p>
+          ) : cart.total > findPromo?.initial_amount ? (
+            <p style={{ marginLeft: 10, color: "green", marginTop: 10 }}>
+              Промокод действует
+            </p>
+          ) : (
+            <p style={{ marginLeft: 10, color: "red", marginTop: 10 }}>
+              Промокод действует от {findPromo.initial_amount.toLocaleString()}
+            </p>
+          )}
+        </div>
+
         <textarea
           name="comment"
           id="comment"
@@ -129,15 +173,32 @@ const Payment = () => {
               <span>0 сум</span>
             )}
           </div>
+          {cart.total > findPromo?.initial_amount ? (
+            <div className="discount price">
+              <p className="price-title">Скидка {findPromo.sale}%</p>
+              <span style={{ color: "red" }}>
+                {(cart.total * `0.${findPromo.sale}`).toLocaleString()} сум
+              </span>
+            </div>
+          ) : (
+            ""
+          )}
+
           <div className="total price">
             <p className="total-title">Итого</p>
             {typePut == "Доставка" ? (
               <span className="total-price">
-                {(cart.total + 19000).toLocaleString()} сум
+                {sale > 0
+                  ? (cart.total - sale + 19000).toLocaleString()
+                  : (cart.total + 19000).toLocaleString()}
+                сум
               </span>
             ) : (
               <span className="total-price">
-                {cart.total.toLocaleString()} сум
+                {sale > 0
+                  ? (cart.total - sale).toLocaleString()
+                  : cart.total.toLocaleString()}
+                сум
               </span>
             )}
           </div>
