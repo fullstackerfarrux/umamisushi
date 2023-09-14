@@ -34,7 +34,7 @@ const OrderFooter = ({ total, price }) => {
                   Оформить заказ
                 </button>
               )}
-              <Link to={"/"}>
+              <Link to={`/${cart.user_id}`}>
                 <button className="btn2">
                   <i className="fa-solid fa-left-long"></i>Продолжить покупки
                 </button>

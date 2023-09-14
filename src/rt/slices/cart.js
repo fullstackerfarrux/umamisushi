@@ -6,6 +6,7 @@ const initialState = {
   items: cartStorage !== null ? cartStorage.items : [],
   total: cartStorage !== null ? cartStorage.total : 0,
   undiscount: cartStorage !== null ? cartStorage.undiscount : 0,
+  user_id: cartStorage !== null ? cartStorage.user_id : "",
 };
 
 const cartSlice = createSlice({
@@ -60,9 +61,18 @@ const cartSlice = createSlice({
 
       state.undiscount -= +action.payload.product.price * +action.payload.count;
     },
+
+    addUserId(state, action) {
+      state.user_id = action.payload;
+    },
   },
 });
 
-export const { addToCart, incItemCount, decItemCount, removeFromProduct } =
-  cartSlice.actions;
+export const {
+  addToCart,
+  incItemCount,
+  decItemCount,
+  removeFromProduct,
+  addUserId,
+} = cartSlice.actions;
 export default cartSlice.reducer;

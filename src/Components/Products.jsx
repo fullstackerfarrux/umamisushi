@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addToCart, decItemCount, incItemCount } from "../rt/slices/cart";
+import {
+  addToCart,
+  addUserId,
+  decItemCount,
+  incItemCount,
+} from "../rt/slices/cart";
 import { useSelector } from "react-redux";
 
 const Products = () => {
+  const { id } = useParams();
   const dispatch = useDispatch();
   const { cart } = useSelector((cart) => cart);
   localStorage.setItem("cart", JSON.stringify(cart));
@@ -17,6 +23,7 @@ const Products = () => {
     const tg = window.Telegram.WebApp;
     tg.expand();
     tg.MainButton.hide();
+    dispatch(addUserId(id));
 
     async function get() {
       await fetch("https://api.umamisushibot.uz/products", {

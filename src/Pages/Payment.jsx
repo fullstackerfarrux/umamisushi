@@ -8,6 +8,7 @@ const Payment = () => {
   const [comment, setComment] = useState("");
   const [typePut, setTypePut] = useState("Доставка");
   const [typePayment, setTypePayment] = useState("Наличные");
+  const [firstOrder, setFirstOrder] = useState(0);
   const [findPromo, setFindPromo] = useState(0);
   const [sale, setSale] = useState(0);
   const tg = window.Telegram.WebApp;
@@ -27,8 +28,8 @@ const Payment = () => {
 
     let total =
       typePut == "Доставка"
-        ? (cart.total + sale + 19000).toLocaleString()
-        : (cart.total + sale).toLocaleString();
+        ? (cart.total - sale + 19000).toLocaleString()
+        : (cart.total - sale).toLocaleString();
 
     let res = {
       order_products: result,
@@ -46,7 +47,7 @@ const Payment = () => {
       undiscount: 0,
     };
     localStorage.setItem("cart", JSON.stringify(remove));
-  }, [typePut, typePayment, comment]);
+  }, [typePut, typePayment, comment, findPromo]);
 
   useEffect(() => {
     tg.onEvent("mainButtonClicked", onSendData);
@@ -65,6 +66,24 @@ const Payment = () => {
       cursor: "pointer",
     });
     tg.MainButton.show();
+
+    async function get() {
+      await fetch("https://api.umamisushibot.uz/get/order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          user_id: cart?.user_id,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) =>
+          data.orders.length <= 0
+            ? (setFirstOrder(10), setSale(cart.total * 0.1))
+            : setFirstOrder(0)
+        );
+    }
+
+    get();
   }, []);
 
   const checkPromocode = (promo) => {
@@ -74,14 +93,39 @@ const Payment = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          data.data.find((p, index) => p.title == promo) !== undefined
-            ? (setFindPromo(data.data.find((p, index) => p.title == promo)),
+          data.data.find(
+            (p, index) =>
+              p.title == promo &&
+              p.isactive == true &&
+              p.usedcount < p.usage_limit
+          ) !== undefined
+            ? (setFindPromo(
+                data.data.find(
+                  (p, index) =>
+                    p.title == promo &&
+                    p.isactive == true &&
+                    p.usedcount < p.usage_limit
+                )
+              ),
               setSale(
                 cart.total *
-                  `0.${data.data.find((p, index) => p.title == promo).sale}`
+                  `0.${
+                    data.data.find(
+                      (p, index) =>
+                        p.title == promo &&
+                        p.isactive == true &&
+                        p.usedcount < p.usage_limit
+                    )?.sale
+                  }`
               ))
+            : firstOrder > 0
+            ? (setSale(cart.total * 0.1), setFindPromo(1))
             : (setFindPromo(1), setSale(0));
         });
+
+      if (promo.length == 0) {
+        setFindPromo(0);
+      }
     }, 400);
   };
 
@@ -126,7 +170,6 @@ const Payment = () => {
             PayMe
           </button>
         </div>
-
         <div className="promocode">
           <input
             type="text"
@@ -134,6 +177,7 @@ const Payment = () => {
             placeholder="Введите промокод"
             onChange={(e) => checkPromocode(e.target.value)}
           />
+
           {findPromo == 0 ? (
             ""
           ) : findPromo == 1 ? (
@@ -146,8 +190,20 @@ const Payment = () => {
             </p>
           ) : (
             <p style={{ marginLeft: 10, color: "red", marginTop: 10 }}>
-              Промокод действует от {findPromo.initial_amount.toLocaleString()}
+              Промокод действует от {findPromo?.initial_amount.toLocaleString()}
             </p>
+          )}
+
+          {cart.total > findPromo?.initial_amount ? (
+            ""
+          ) : findPromo == 1 ? (
+            ""
+          ) : firstOrder > 0 ? (
+            <p style={{ marginLeft: 10, color: "green", marginTop: 10 }}>
+              Для вас существует скидка для первой заказ
+            </p>
+          ) : (
+            ""
           )}
         </div>
 
@@ -178,6 +234,13 @@ const Payment = () => {
               <p className="price-title">Скидка {findPromo.sale}%</p>
               <span style={{ color: "red" }}>
                 {(cart.total * `0.${findPromo.sale}`).toLocaleString()} сум
+              </span>
+            </div>
+          ) : firstOrder > 0 ? (
+            <div className="discount price">
+              <p className="price-title">Скидка {firstOrder}%</p>
+              <span style={{ color: "red" }}>
+                {(cart.total * `0.${firstOrder}`).toLocaleString()} сум
               </span>
             </div>
           ) : (
