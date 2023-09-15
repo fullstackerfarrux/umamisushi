@@ -37,6 +37,7 @@ const Payment = () => {
       delivery: typePut,
       payment: typePayment,
       comment: comment,
+      promocode: findPromo.title !== undefined ? findPromo.title : "",
     };
 
     tg.sendData(JSON.stringify(res));
@@ -122,11 +123,20 @@ const Payment = () => {
             ? (setSale(cart.total * 0.1), setFindPromo(1))
             : (setFindPromo(1), setSale(0));
         });
-
       if (promo.length == 0) {
         setFindPromo(0);
       }
     }, 400);
+    // fetch("https://api.umamisushibot.uz/promo/getforuse", {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify({
+    //     id: cart.user_id,
+    //     text: promo,
+    //   }),
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => console.log(data));
   };
 
   return (
@@ -165,6 +175,7 @@ const Payment = () => {
             className={typePayment == "РауМе" ? "payme" : "payme-notactive"}
             onClick={() => {
               setTypePayment("РауМе");
+              onSendData();
             }}
           >
             PayMe
