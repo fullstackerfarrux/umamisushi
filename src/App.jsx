@@ -9,7 +9,6 @@ function App() {
   return (
     <>
       <Routes>
-        {/* <Route path="/" element={<Home />} /> */}
         <Route path="/:id" element={<Home />} />
         <Route path="/order" element={<Orders />} />
         <Route path="/single-product/:id" element={<SinglePage />} />
