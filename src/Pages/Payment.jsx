@@ -87,56 +87,28 @@ const Payment = () => {
     get();
   }, []);
 
-  const checkPromocode = (promo) => {
-    setTimeout(async () => {
-      await fetch("https://api.umamisushibot.uz/promo/get", {
-        method: "GET",
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          data.data.find(
-            (p, index) =>
-              p.title == promo &&
-              p.isactive == true &&
-              p.usedcount < p.usage_limit
-          ) !== undefined
-            ? (setFindPromo(
-                data.data.find(
-                  (p, index) =>
-                    p.title == promo &&
-                    p.isactive == true &&
-                    p.usedcount < p.usage_limit
-                )
-              ),
-              setSale(
-                cart.total *
-                  `0.${
-                    data.data.find(
-                      (p, index) =>
-                        p.title == promo &&
-                        p.isactive == true &&
-                        p.usedcount < p.usage_limit
-                    )?.sale
-                  }`
-              ))
-            : firstOrder > 0
-            ? (setSale(cart.total * 0.1), setFindPromo(1))
-            : (setFindPromo(1), setSale(0));
-        });
-      if (promo.length == 0) {
-        setFindPromo(0);
-      }
-    }, 400);
-    // fetch("https://api.umamisushibot.uz/promo/getforuse", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({
-    //     id: cart.user_id,
-    //     text: promo,
-    //   }),
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => console.log(data));
+  const checkPromocode = async (promo) => {
+    await fetch("https://api.umamisushibot.uz/promo/getforuse", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        id: cart.user_id,
+        text: promo,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        data.msg !== "Not Found"
+          ? (setFindPromo(data.msg),
+            setSale(cart.total * `0.${data.msg?.sale}`))
+          : firstOrder > 0
+          ? (setSale(cart.total * 0.1), setFindPromo(1))
+          : (setFindPromo(1), setSale(0));
+      });
+
+    if (promo.length == 0) {
+      setFindPromo(0);
+    }
   };
 
   return (
@@ -206,8 +178,6 @@ const Payment = () => {
           )}
 
           {cart.total > findPromo?.initial_amount ? (
-            ""
-          ) : findPromo == 1 ? (
             ""
           ) : firstOrder > 0 ? (
             <p style={{ marginLeft: 10, color: "green", marginTop: 10 }}>
