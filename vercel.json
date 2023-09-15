@@ -2,11 +2,11 @@
   "routes": [
     {
       "src": "/",
-      "dist": "/"
+      "dest": "/"
     },
     {
       "src": "/:id",
-      "dist": "/"
+      "dest": "/"
     }
   ]
 }
