@@ -6,7 +6,6 @@ import { useParams } from "react-router-dom";
 
 const Home = () => {
   const { id } = useParams();
-  console.log(id);
   return (
     <>
       <div className="home">
