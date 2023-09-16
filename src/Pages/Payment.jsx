@@ -10,6 +10,7 @@ const Payment = () => {
   const [typePayment, setTypePayment] = useState("Наличные");
   const [firstOrder, setFirstOrder] = useState(0);
   const [findPromo, setFindPromo] = useState(0);
+  const [delivery, setDelivery] = useState();
   const [sale, setSale] = useState(0);
   const tg = window.Telegram.WebApp;
 
@@ -28,7 +29,7 @@ const Payment = () => {
 
     let total =
       typePut == "Доставка"
-        ? (cart.total - sale + 19000).toLocaleString()
+        ? (cart.total - sale + delivery?.delivery_price).toLocaleString()
         : (cart.total - sale).toLocaleString();
 
     let res = {
@@ -82,6 +83,12 @@ const Payment = () => {
             ? (setFirstOrder(10), setSale(cart.total * 0.1))
             : setFirstOrder(0)
         );
+
+      await fetch("https://api.umamisushibot.uz/delivery", {
+        method: "GET",
+      })
+        .then((res) => res.json())
+        .then((data) => setDelivery(data.msg));
     }
 
     get();
@@ -204,7 +211,7 @@ const Payment = () => {
           <div className="selivery-price price">
             <p className="price-title">Доставка</p>
             {typePut == "Доставка" ? (
-              <span>19 000 сум</span>
+              <span>{delivery?.delivery_price.toLocaleString()} сум</span>
             ) : (
               <span>0 сум</span>
             )}
@@ -227,13 +234,18 @@ const Payment = () => {
             ""
           )}
 
+          {console.log(delivery)}
           <div className="total price">
             <p className="total-title">Итого</p>
             {typePut == "Доставка" ? (
               <span className="total-price">
                 {sale > 0
-                  ? (cart.total - sale + 19000).toLocaleString()
-                  : (cart.total + 19000).toLocaleString()}
+                  ? (
+                      cart.total -
+                      sale +
+                      delivery?.delivery_price
+                    ).toLocaleString()
+                  : (cart.total + delivery?.delivery_price).toLocaleString()}
                 сум
               </span>
             ) : (

@@ -5,6 +5,19 @@ import { Link } from "react-router-dom";
 const OrderFooter = ({ total, price }) => {
   const dispatch = useDispatch();
   const { cart } = useSelector((cart) => cart);
+  const [delivery, setDelivery] = useState();
+
+  useEffect(() => {
+    async function get() {
+      await fetch("https://api.umamisushibot.uz/delivery", {
+        method: "GET",
+      })
+        .then((res) => res.json())
+        .then((data) => setDelivery(data.msg));
+    }
+
+    get();
+  }, []);
 
   return (
     <>
@@ -18,7 +31,7 @@ const OrderFooter = ({ total, price }) => {
             </div>
             <div className="footer_text">
               <h3>Доставка</h3>
-              <p>19 000 сум</p>
+              <p>{delivery?.delivery_price.toLocaleString()} сум</p>
             </div>
             <div className="footer_text_answer">
               <h3>Итого</h3>
