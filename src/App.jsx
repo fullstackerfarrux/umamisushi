@@ -2,8 +2,8 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home";
 import Orders from "./Pages/Orders";
 import SinglePage from "./Pages/SinglePage";
-import "./index.scss";
 import Payment from "./Pages/Payment";
+import "./index.scss";
 
 function App() {
   return (
