@@ -204,7 +204,7 @@ const Payment = () => {
 
         <div className="prices">
           <div className="subtotal price">
-            <p className="price-title">Подытог</p>
+            <p className="price-title">Подитог</p>
             <span>{cart.undiscount.toLocaleString()} сум</span>
           </div>
 
