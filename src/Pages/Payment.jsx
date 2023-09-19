@@ -156,7 +156,6 @@ const Payment = () => {
             className={typePayment == "РауМе" ? "payme" : "payme-notactive"}
             onClick={() => {
               setTypePayment("РауМе");
-              onSendData();
             }}
           >
             PayMe
