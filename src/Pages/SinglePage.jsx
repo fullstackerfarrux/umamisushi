@@ -155,7 +155,7 @@ const SinglePage = () => {
             className="footer-buttons"
             style={count == 0 ? { display: "flex" } : { display: "none" }}
           >
-            <Link to={"/"} className="back">
+            <Link to={`/${cart.user_id}`} className="back">
               <FiArrowLeft className="back-text" />
             </Link>
 
