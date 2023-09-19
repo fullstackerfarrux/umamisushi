@@ -34,7 +34,7 @@ const Payment = () => {
 
     let res = {
       order_products: result,
-      total,
+      total: total.toLocaleString(),
       delivery: typePut,
       payment: typePayment,
       comment: comment,
