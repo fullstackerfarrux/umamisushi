@@ -43,14 +43,14 @@ const Payment = () => {
 
     console.log(res.total);
 
-    // tg.sendData(JSON.stringify(res));
+    tg.sendData(JSON.stringify(res));
 
-    // let remove = {
-    //   items: [],
-    //   total: 0,
-    //   undiscount: 0,
-    // };
-    // localStorage.setItem("cart", JSON.stringify(remove));
+    let remove = {
+      items: [],
+      total: 0,
+      undiscount: 0,
+    };
+    localStorage.setItem("cart", JSON.stringify(remove));
   }, [typePut, typePayment, comment, findPromo]);
 
   useEffect(() => {
