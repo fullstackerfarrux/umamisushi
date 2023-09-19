@@ -244,14 +244,16 @@ const Payment = () => {
                       sale +
                       delivery?.delivery_price
                     ).toLocaleString()
-                  : (cart.total + delivery?.delivery_price).toLocaleString()}
+                  : (
+                      cart.total + delivery?.delivery_price
+                    ).toLocaleString()}{" "}
                 сум
               </span>
             ) : (
               <span className="total-price">
                 {sale > 0
                   ? (cart.total - sale).toLocaleString()
-                  : cart.total.toLocaleString()}
+                  : cart.total.toLocaleString()}{" "}
                 сум
               </span>
             )}
