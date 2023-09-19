@@ -41,8 +41,6 @@ const Payment = () => {
       promocode: findPromo.title !== undefined ? findPromo.title : "",
     };
 
-    console.log(res.total);
-
     tg.sendData(JSON.stringify(res));
 
     let remove = {
@@ -51,7 +49,7 @@ const Payment = () => {
       undiscount: 0,
     };
     localStorage.setItem("cart", JSON.stringify(remove));
-  }, [typePut, typePayment, comment, findPromo]);
+  }, [typePut, typePayment, comment, findPromo, delivery]);
 
   useEffect(() => {
     tg.onEvent("mainButtonClicked", onSendData);
