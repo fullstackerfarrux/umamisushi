@@ -29,8 +29,8 @@ const Payment = () => {
 
     let total =
       typePut == "Доставка"
-        ? (cart.total - sale + delivery?.delivery_price).toLocaleString()
-        : (cart.total - sale).toLocaleString();
+        ? cart.total - sale + delivery?.delivery_price
+        : cart.total - sale;
 
     let res = {
       order_products: result,
@@ -41,14 +41,16 @@ const Payment = () => {
       promocode: findPromo.title !== undefined ? findPromo.title : "",
     };
 
-    tg.sendData(JSON.stringify(res));
+    console.log(res.total);
 
-    let remove = {
-      items: [],
-      total: 0,
-      undiscount: 0,
-    };
-    localStorage.setItem("cart", JSON.stringify(remove));
+    // tg.sendData(JSON.stringify(res));
+
+    // let remove = {
+    //   items: [],
+    //   total: 0,
+    //   undiscount: 0,
+    // };
+    // localStorage.setItem("cart", JSON.stringify(remove));
   }, [typePut, typePayment, comment, findPromo]);
 
   useEffect(() => {
@@ -154,6 +156,7 @@ const Payment = () => {
             className={typePayment == "РауМе" ? "payme" : "payme-notactive"}
             onClick={() => {
               setTypePayment("РауМе");
+              onSendData();
             }}
           >
             PayMe
@@ -234,7 +237,6 @@ const Payment = () => {
             ""
           )}
 
-          {console.log(delivery)}
           <div className="total price">
             <p className="total-title">Итого</p>
             {typePut == "Доставка" ? (
