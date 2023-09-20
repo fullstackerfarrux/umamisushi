@@ -136,7 +136,14 @@ const SinglePage = () => {
               ))}
             </div>
             <div className="product-data">
-              <p>{product[0]?.description}</p>
+              <div className="description">
+                {product[0]?.description.split("\n").map((line, index) => (
+                  <p key={index}>
+                    {line}
+                    <br />
+                  </p>
+                ))}
+              </div>
 
               {product[0]?.discount ? (
                 <div className="cost">
