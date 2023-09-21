@@ -171,7 +171,7 @@ const SinglePage = () => {
                 </label>
                 <input
                   type="text"
-                  placeholder="Выведите вид"
+                  placeholder="Введите вид"
                   defaultValue={
                     cart.items.find((i) => i.product.product_id == id)?.filling
                   }
