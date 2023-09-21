@@ -56,7 +56,7 @@ const Products = () => {
   };
 
   let addToBag = (product) => {
-    dispatch(addToCart(product));
+    dispatch(addToCart([product]));
     localStorage.setItem("cart", JSON.stringify(cart));
   };
 

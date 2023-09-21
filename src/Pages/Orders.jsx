@@ -51,7 +51,12 @@ const Orders = () => {
                     width={90}
                     height={90}
                   />
-                  <p className="text">{p.product.title}</p>
+                  <p className="text">
+                    {p.product.title}{" "}
+                    {cart.items[index]?.filling?.length > 0
+                      ? `(${cart.items[index].filling})`
+                      : ""}
+                  </p>
                 </div>
                 <div className="prices">
                   <p className="price">

@@ -14,21 +14,37 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart(state, action) {
-      state.items.push({ count: 1, product: action.payload });
-      state.total += +action.payload.discount
-        ? +action.payload.discount_price
-        : +action.payload.price;
-
-      state.undiscount += +action.payload.price;
+      let check = state.items.find(
+        (i) => i.product.product_id == action.payload[0].product_id
+      );
+      if (!check) {
+        state.items.push({
+          count: 1,
+          product: action.payload[0],
+          filling:
+            action.payload[1]?.filling == undefined
+              ? ""
+              : action.payload[1]?.filling,
+        });
+        state.total += +action.payload[0].price;
+        state.undiscount += +action.payload[0].price;
+      } else {
+        state.items = state.items.filter(
+          (i) => i.product.product_id !== action.payload[0].product_id
+        );
+        state.items.push({
+          count: 1,
+          product: action.payload[0],
+          filling: action.payload[1]?.filling,
+        });
+      }
     },
 
     incItemCount(state, action) {
       state.items.find((i) => i.product.product_id == action.payload.product_id)
         .count++;
 
-      state.total += +action.payload.discount
-        ? +action.payload.discount_price
-        : +action.payload.price;
+      state.total += +action.payload.price;
 
       state.undiscount += +action.payload.price;
     },

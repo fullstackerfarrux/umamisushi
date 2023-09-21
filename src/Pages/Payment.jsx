@@ -25,6 +25,7 @@ const Payment = () => {
       product_name: p.product.title,
       price: `${p.product.price.toLocaleString()}`,
       count: p.count,
+      filling: cart.items[index]?.filling,
     }));
 
     let total =

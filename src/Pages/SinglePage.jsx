@@ -14,6 +14,7 @@ const SinglePage = () => {
   const [product, setProduct] = useState([]);
   const [slider, setSlider] = useState(0);
   const [count, setCount] = useState(0);
+  const [filling, setFilling] = useState(0);
   const { id } = useParams();
   const maxLengthImg = +product[0]?.images.length - 1;
 
@@ -45,6 +46,23 @@ const SinglePage = () => {
     get();
   }, []);
 
+  const handleView = (e) => {
+    let text = e.target.value;
+    let res = product;
+
+    if (res.length > 1) {
+      res.splice(1, 1);
+      res.push({ filling: text });
+    } else {
+      res.push({ filling: text });
+    }
+
+    dispatch(addToCart(res));
+    localStorage.setItem("cart", JSON.stringify(cart));
+    setCount(1);
+    setFilling(text);
+  };
+
   if (maxLengthImg < slider) {
     setSlider(0);
   }
@@ -62,10 +80,12 @@ const SinglePage = () => {
   };
 
   let addToBag = (product) => {
-    dispatch(addToCart(product));
+    dispatch(addToCart([product]));
     localStorage.setItem("cart", JSON.stringify(cart));
     setCount(1);
   };
+
+  console.log(cart.items.find((i) => i.product.product_id == id));
 
   return (
     <>
@@ -144,6 +164,20 @@ const SinglePage = () => {
                   </p>
                 ))}
               </div>
+
+              <form>
+                <label htmlFor="view">
+                  <b>Вид</b>
+                </label>
+                <input
+                  type="text"
+                  placeholder="Выведите вид"
+                  defaultValue={
+                    cart.items.find((i) => i.product.product_id == id)?.filling
+                  }
+                  onChange={(e) => handleView(e)}
+                />
+              </form>
 
               {product[0]?.discount ? (
                 <div className="cost">
