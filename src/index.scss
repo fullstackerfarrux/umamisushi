@@ -92,13 +92,12 @@ li {
 
 .search {
   width: 100vw;
-  height: 100%;
+  height: 500px;
   position: fixed;
   top: -550px;
   left: 0;
   z-index: 9999;
   padding: 20px;
-  // background-color: rgba(128, 128, 128, 0.473);
 
   .box {
     width: 100vw;
@@ -303,8 +302,8 @@ li {
 
   .table_text {
     border-bottom: 2px solid rgb(199, 22, 18);
-    padding-bottom: 7px;
-    padding: 0 7px 7px 5px;
+    padding-bottom: 5px;
+    padding: 0 7px 5px 5px;
     margin-right: 20px;
 
     h3 {

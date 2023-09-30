@@ -48,9 +48,9 @@ const Header = () => {
               color="#004225"
               style={{ margin: "0px 15px" }}
             />
-            {cart.items.length !== null ? (
-              cart.items.length != 0 ? (
-                <span className="bag-count">{cart.items.length}</span>
+            {cart?.items?.length !== null ? (
+              cart?.items?.length != 0 ? (
+                <span className="bag-count">{cart?.items?.length}</span>
               ) : (
                 ""
               )
@@ -65,6 +65,7 @@ const Header = () => {
           />
         </div>
       </div>
+
       <div
         className="search"
         style={

@@ -114,7 +114,7 @@ const Products = () => {
                 <div
                   className="buttons"
                   style={
-                    cart.items.find(
+                    cart?.items?.find(
                       (f) => f.product.product_id == p.product_id
                     ) !== undefined
                       ? { display: "flex" }
@@ -123,7 +123,7 @@ const Products = () => {
                 >
                   <p onClick={() => decrement(p)}>-</p>
                   <span>
-                    {cart.items.find(
+                    {cart?.items?.find(
                       (f) => f.product.product_id == p.product_id
                     ) !== undefined
                       ? cart.items.find(
@@ -136,7 +136,7 @@ const Products = () => {
                 <button
                   onClick={() => addToBag(p)}
                   style={
-                    cart.items.find(
+                    cart?.items?.find(
                       (f) => f.product.product_id == p.product_id
                     ) !== undefined
                       ? { display: "none" }
