@@ -136,6 +136,7 @@ const Payment = () => {
             className={typePut == "Самовызов" ? "pickup" : "pickup-notactive"}
             onClick={() => {
               setTypePut("Самовызов");
+              onSendData();
             }}
           >
             Самовызов
@@ -152,6 +153,7 @@ const Payment = () => {
             Наличные деньги
           </button>
           <button
+            style={{ display: "none" }}
             className={typePayment == "РауМе" ? "payme" : "payme-notactive"}
             onClick={() => {
               setTypePayment("РауМе");
