@@ -36,7 +36,7 @@ const Payment = () => {
 
     let res = {
       order_products: result,
-      total: total.toLocaleString(),
+      total: total,
       delivery: typePut,
       payment: typePayment,
       comment: comment,
