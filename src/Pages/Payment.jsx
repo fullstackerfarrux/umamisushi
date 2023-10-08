@@ -11,6 +11,7 @@ const Payment = () => {
   const [firstOrder, setFirstOrder] = useState(0);
   const [findPromo, setFindPromo] = useState(0);
   const [delivery, setDelivery] = useState();
+  const [deliveryPrice, setDeliveryPrice] = useState(0);
   const [sale, setSale] = useState(0);
   const tg = window.Telegram.WebApp;
 
@@ -30,7 +31,7 @@ const Payment = () => {
 
     let total =
       typePut == "Доставка"
-        ? cart.total - sale + delivery?.delivery_price
+        ? cart.total - sale + deliveryPrice
         : cart.total - sale;
 
     let res = {
@@ -118,6 +119,67 @@ const Payment = () => {
       setFindPromo(0);
     }
   };
+
+  async function getDeliveryPrice() {
+    let startSum = 10000;
+    let kmSum = 2000;
+
+    let location = await fetch(
+      `https://api.umamisushibot.uz/user_location/${cart.user_id}`,
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        return data.location;
+      });
+
+    // Convert from degrees to radians
+    function degreesToRadians(degrees) {
+      var radians = (degrees * Math.PI) / 180;
+      return radians;
+    }
+
+    // Function takes two objects, that contain coordinates to a starting and destination location.
+    function calcDistance(startingCoords, destinationCoords) {
+      let startingLat = degreesToRadians(startingCoords.latitude);
+      let startingLong = degreesToRadians(startingCoords.longitude);
+      let destinationLat = degreesToRadians(destinationCoords.latitude);
+      let destinationLong = degreesToRadians(destinationCoords.longitude);
+
+      // Radius of the Earth in kilometers
+      let radius = 6571;
+
+      // Haversine equation
+      let distanceInKilometers =
+        Math.acos(
+          Math.sin(startingLat) * Math.sin(destinationLat) +
+            Math.cos(startingLat) *
+              Math.cos(destinationLat) *
+              Math.cos(startingLong - destinationLong)
+        ) * radius;
+
+      return distanceInKilometers;
+    }
+
+    let sCoords = {
+      latitude: 41.302626,
+      longitude: 69.279813,
+    };
+
+    let dCoords = {
+      latitude: location[0],
+      longitude: location[1],
+    };
+
+    let dist = Math.round(calcDistance(sCoords, dCoords));
+    let res = dist * kmSum + startSum;
+    setDeliveryPrice(res);
+  }
+
+  getDeliveryPrice();
 
   return (
     <>
@@ -214,7 +276,7 @@ const Payment = () => {
           <div className="selivery-price price">
             <p className="price-title">Доставка</p>
             {typePut == "Доставка" ? (
-              <span>{delivery?.delivery_price.toLocaleString()} сум</span>
+              <span>{deliveryPrice?.toLocaleString()} сум</span>
             ) : (
               <span>0 сум</span>
             )}
@@ -242,14 +304,8 @@ const Payment = () => {
             {typePut == "Доставка" ? (
               <span className="total-price">
                 {sale > 0
-                  ? (
-                      cart.total -
-                      sale +
-                      delivery?.delivery_price
-                    ).toLocaleString()
-                  : (
-                      cart.total + delivery?.delivery_price
-                    ).toLocaleString()}{" "}
+                  ? (cart.total - sale + deliveryPrice).toLocaleString()
+                  : (cart.total + deliveryPrice).toLocaleString()}{" "}
                 сум
               </span>
             ) : (
