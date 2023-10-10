@@ -97,9 +97,7 @@ const OrderFooter = ({ total, price }) => {
             </div>
             <div className="footer_text_answer">
               <h3>Итого</h3>
-              <p>
-                {(cart.total + delivery?.delivery_price).toLocaleString()} сум
-              </p>
+              <p>{(cart.total + deliveryPrice).toLocaleString()} сум</p>
             </div>
             <div>
               {cart.items?.length > 0 ? (
