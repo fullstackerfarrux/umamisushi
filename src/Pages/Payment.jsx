@@ -214,13 +214,6 @@ const Payment = () => {
             Наличные деньги
           </button>
           <button
-            style={
-              cart.user_id == "206261493"
-                ? { display: "block" }
-                : cart.user_id == "609736291"
-                ? { display: "block" }
-                : { display: "none" }
-            }
             className={typePayment == "Click" ? "payme" : "payme-notactive"}
             onClick={() => {
               setTypePayment("Click");
