@@ -198,7 +198,6 @@ const Payment = () => {
             className={typePut == "Самовызов" ? "pickup" : "pickup-notactive"}
             onClick={() => {
               setTypePut("Самовызов");
-              onSendData();
             }}
           >
             Самовызов
