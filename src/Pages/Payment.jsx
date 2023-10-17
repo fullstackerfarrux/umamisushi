@@ -250,7 +250,7 @@ const Payment = () => {
             ""
           ) : firstOrder > 0 ? (
             <p style={{ marginLeft: 10, color: "green", marginTop: 10 }}>
-              Для вас существует скидка для первой заказ
+              Для вас существует скидка на первой заказ
             </p>
           ) : (
             ""
