@@ -221,7 +221,21 @@ const Payment = () => {
           >
             Click
           </button>
-          
+          <button 
+            style={
+              cart.user_id == "206261493"
+                ? { display: "block" }
+                : cart.user_id == "609736291"
+                ? { display: "block" }
+                : { display: "none" }
+            }
+            className={typePayment == "Payme" ? "payme" : "payme-notactive"}
+            onClick={() => {
+              setTypePayment("Payme");
+            }}
+          >
+            Payme
+          </button>
 
         </div>
         <div className="promocode">
