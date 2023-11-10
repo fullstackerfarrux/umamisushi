@@ -230,7 +230,7 @@ const Payment = () => {
           >
             Payme
           </button>
-          ) : none
+          ) : ("")
           }
 
         </div>
