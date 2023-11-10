@@ -221,6 +221,18 @@ const Payment = () => {
           >
             Click
           </button>
+          {user_id == "206261493" ? (
+          <button
+            className={typePayment == "Payme" ? "payme" : "payme-notactive"}
+            onClick={() => {
+              setTypePayment("Payme");
+            }}
+          >
+            Payme
+          </button>
+          ) : none
+          }
+
         </div>
         <div className="promocode">
           <input
