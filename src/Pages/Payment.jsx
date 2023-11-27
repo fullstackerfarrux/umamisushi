@@ -82,7 +82,7 @@ const Payment = () => {
         .then((res) => res.json())
         .then((data) =>
           data.orders.length <= 0
-            ? (setFirstOrder(10), setSale(cart.total * 0.1))
+            ? setFirstOrder(0) // (setFirstOrder(10), setSale(cart.total * 0.1))
             : setFirstOrder(0)
         );
 
