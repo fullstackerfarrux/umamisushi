@@ -85,37 +85,37 @@ const Payment = () => {
         //     ? setFirstOrder(0) // 
         //     : setFirstOrder(0)
         // );
-        setFirstOrder(0);
-        if (cart.user_id == "206261493") {
-          const currentDate = new Date();
-          // Set the timezone to Asia/Tashkent
-          const options = { timeZone: 'Asia/Tashkent' };
-          currentDate.toLocaleString('en-US', options);
-          // Get the current hour and minutes
-          const currentHour = currentDate.getHours();
-          const currentMinutes = currentDate.getMinutes();
-          if (
-            (currentHour >= 12 && currentHour < 17)
-          ) {
-            if (cart.total > 200000) {
-              (setFirstOrder(15), setSale(cart.total * 0.15))
-            };
-            
-          } else if (
-            (currentHour >= 0 && currentHour < 3) &&
-            (currentHour !== 2 || currentMinutes < 30)
-
-          ){
-            if (cart.total > 400000) {
-              (setFirstOrder(20), setSale(cart.total * 0.2))
-            };
+        
+        const currentDate = new Date();
+        // Set the timezone to Asia/Tashkent
+        const options = { timeZone: 'Asia/Tashkent' };
+        currentDate.toLocaleString('en-US', options);
+        // Get the current hour and minutes
+        const currentHour = currentDate.getHours();
+        const currentMinutes = currentDate.getMinutes();
+        if (
+          (currentHour >= 12 && currentHour < 17)
+        ) {
+          if (cart.total > 200000) {
+            (setFirstOrder(15), setSale(cart.total * 0.15))
           } else {
-            (setFirstOrder(0));
+            setFirstOrder(0);
           };
-
+          
+        } else if (
+          (currentHour >= 0 && currentHour < 3) &&
+          (currentHour !== 2 || currentMinutes < 30)
+        ){
+          if (cart.total > 400000) {
+            (setFirstOrder(20), setSale(cart.total * 0.2))
+          } else {
+            setFirstOrder(0);
+          };
         } else {
           (setFirstOrder(0));
         };
+
+        
 
       await fetch("https://api.umamisushibot.uz/delivery", {
         method: "GET",
