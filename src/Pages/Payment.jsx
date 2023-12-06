@@ -19,6 +19,67 @@ const Payment = () => {
     let text = e.target.value;
     setComment(text);
   };
+  
+  async function getDeliveryPrice() {
+    let startSum = 10000;
+    let kmSum = 2000;
+
+    let location = await fetch(
+      `https://api.umamisushibot.uz/user_location/${cart.user_id}`,
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        return data.location;
+      });
+
+    // Convert from degrees to radians
+    function degreesToRadians(degrees) {
+      var radians = (degrees * Math.PI) / 180;
+      return radians;
+    }
+
+    // Function takes two objects, that contain coordinates to a starting and destination location.
+    function calcDistance(startingCoords, destinationCoords) {
+      let startingLat = degreesToRadians(startingCoords.latitude);
+      let startingLong = degreesToRadians(startingCoords.longitude);
+      let destinationLat = degreesToRadians(destinationCoords.latitude);
+      let destinationLong = degreesToRadians(destinationCoords.longitude);
+
+      // Radius of the Earth in kilometers
+      let radius = 6571;
+
+      // Haversine equation
+      let distanceInKilometers =
+        Math.acos(
+          Math.sin(startingLat) * Math.sin(destinationLat) +
+            Math.cos(startingLat) *
+              Math.cos(destinationLat) *
+              Math.cos(startingLong - destinationLong)
+        ) * radius;
+
+      return distanceInKilometers;
+    }
+
+    let sCoords = {
+      latitude: 41.302626,
+      longitude: 69.279813,
+    };
+
+    let dCoords = {
+      latitude: location[0],
+      longitude: location[1],
+    };
+
+    let dist = Math.round(calcDistance(sCoords, dCoords));
+    let res = dist * kmSum + startSum;
+    setDeliveryPrice(res);
+    return res;
+  }
+
   getDeliveryPrice();
   const onSendData = useCallback(async () => {
     let result = cart.items?.map((p, index) => ({
@@ -28,7 +89,7 @@ const Payment = () => {
       count: p.count,
       filling: cart.items[index]?.filling,
     }));
-    
+
 
     let total =
       typePut == "Доставка"
@@ -152,65 +213,7 @@ const Payment = () => {
     }
   };
 
-  async function getDeliveryPrice() {
-    let startSum = 10000;
-    let kmSum = 2000;
-
-    let location = await fetch(
-      `https://api.umamisushibot.uz/user_location/${cart.user_id}`,
-      {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      }
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        return data.location;
-      });
-
-    // Convert from degrees to radians
-    function degreesToRadians(degrees) {
-      var radians = (degrees * Math.PI) / 180;
-      return radians;
-    }
-
-    // Function takes two objects, that contain coordinates to a starting and destination location.
-    function calcDistance(startingCoords, destinationCoords) {
-      let startingLat = degreesToRadians(startingCoords.latitude);
-      let startingLong = degreesToRadians(startingCoords.longitude);
-      let destinationLat = degreesToRadians(destinationCoords.latitude);
-      let destinationLong = degreesToRadians(destinationCoords.longitude);
-
-      // Radius of the Earth in kilometers
-      let radius = 6571;
-
-      // Haversine equation
-      let distanceInKilometers =
-        Math.acos(
-          Math.sin(startingLat) * Math.sin(destinationLat) +
-            Math.cos(startingLat) *
-              Math.cos(destinationLat) *
-              Math.cos(startingLong - destinationLong)
-        ) * radius;
-
-      return distanceInKilometers;
-    }
-
-    let sCoords = {
-      latitude: 41.302626,
-      longitude: 69.279813,
-    };
-
-    let dCoords = {
-      latitude: location[0],
-      longitude: location[1],
-    };
-
-    let dist = Math.round(calcDistance(sCoords, dCoords));
-    let res = dist * kmSum + startSum;
-    setDeliveryPrice(res);
-    return res;
-  }
+  
 
   
     
