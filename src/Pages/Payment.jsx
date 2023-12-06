@@ -28,11 +28,11 @@ const Payment = () => {
       count: p.count,
       filling: cart.items[index]?.filling,
     }));
-
+    
 
     let total =
       typePut == "Доставка"
-        ? cart.total - sale + deliveryPrice
+        ? cart.total - sale + getDeliveryPrice()
         : cart.total - sale;
 
     let res = {
@@ -209,7 +209,7 @@ const Payment = () => {
     let dist = Math.round(calcDistance(sCoords, dCoords));
     let res = dist * kmSum + startSum;
     setDeliveryPrice(res);
-
+    return res;
   }
 
   
