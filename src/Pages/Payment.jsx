@@ -19,7 +19,7 @@ const Payment = () => {
     let text = e.target.value;
     setComment(text);
   };
-  
+
   async function getDeliveryPrice() {
     let startSum = 10000;
     let kmSum = 2000;
@@ -90,10 +90,10 @@ const Payment = () => {
       filling: cart.items[index]?.filling,
     }));
 
-
+    getDeliveryPrice();
     let total =
       typePut == "Доставка"
-        ? cart.total - sale + getDeliveryPrice()
+        ? cart.total - sale + deliveryPrice
         : cart.total - sale;
 
     let res = {
