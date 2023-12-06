@@ -29,6 +29,12 @@ const Payment = () => {
       filling: cart.items[index]?.filling,
     }));
 
+    typePut == "Доставка"
+      ? deliveryPrice > 0
+        ? tg.MainButton.show()
+        : tg.MainButton.hide()
+      : tg.MainButton.show();
+
     let total =
       typePut == "Доставка"
         ? cart.total - sale + deliveryPrice
@@ -208,11 +214,10 @@ const Payment = () => {
     let dist = Math.round(calcDistance(sCoords, dCoords));
     let res = dist * kmSum + startSum;
     setDeliveryPrice(res);
-    
+
   }
-  
+
   getDeliveryPrice();
-  tg.MainButton.show();
 
   return (
     <>
