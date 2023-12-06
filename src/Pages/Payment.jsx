@@ -208,7 +208,7 @@ const Payment = () => {
     let dist = Math.round(calcDistance(sCoords, dCoords));
     let res = dist * kmSum + startSum;
     setDeliveryPrice(res);
-    tg.MainButton.show();
+    // tg.MainButton.show();
 
   }
 
