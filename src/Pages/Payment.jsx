@@ -70,7 +70,7 @@ const Payment = () => {
       text: `Заказать`,
       cursor: "pointer",
     });
-    tg.MainButton.show();
+    // tg.MainButton.show();
 
     async function get() {
       await fetch("https://api.umamisushibot.uz/get/order", {
