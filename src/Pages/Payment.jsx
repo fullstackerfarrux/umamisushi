@@ -19,7 +19,7 @@ const Payment = () => {
     let text = e.target.value;
     setComment(text);
   };
-
+  getDeliveryPrice();
   const onSendData = useCallback(async () => {
     let result = cart.items?.map((p, index) => ({
       product_id: p.product.product_id,
@@ -212,7 +212,7 @@ const Payment = () => {
 
   }
 
-  getDeliveryPrice();
+  
     
   if (typePut == "Доставка") {
     if (deliveryPrice > 0) {
