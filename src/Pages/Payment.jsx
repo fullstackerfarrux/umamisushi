@@ -70,17 +70,7 @@ const Payment = () => {
       text: `Заказать`,
       cursor: "pointer",
     });
-    
-    if (typePut == "Доставка") {
-      if (deliveryPrice > 0) {
-        tg.MainButton.show()
-      } else {
-        tg.MainButton.hide()
-      }
-    } else {
-      tg.MainButton.show();
-    };
-    // tg.MainButton.show();
+    tg.MainButton.show();
 
     async function get() {
       await fetch("https://api.umamisushibot.uz/get/order", {
@@ -223,6 +213,16 @@ const Payment = () => {
   }
 
   getDeliveryPrice();
+    
+  if (typePut == "Доставка") {
+    if (deliveryPrice > 0) {
+      tg.MainButton.show()
+    } else {
+      tg.MainButton.hide()
+    }
+  } else {
+    tg.MainButton.show();
+  };
 
   return (
     <>
