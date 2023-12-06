@@ -29,11 +29,15 @@ const Payment = () => {
       filling: cart.items[index]?.filling,
     }));
 
-    typePut == "Доставка"
-      ? deliveryPrice > 0
-        ? tg.MainButton.show()
-        : tg.MainButton.hide()
-      : tg.MainButton.show();
+    if (typePut == "Доставка") {
+      if (deliveryPrice > 0) {
+        tg.MainButton.show()
+      } else {
+        tg.MainButton.hide()
+      }
+    } else {
+      tg.MainButton.show();
+    };
 
     let total =
       typePut == "Доставка"
