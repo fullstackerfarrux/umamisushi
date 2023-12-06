@@ -69,7 +69,7 @@ const Payment = () => {
       text: `Заказать`,
       cursor: "pointer",
     });
-    tg.MainButton.show();
+    // tg.MainButton.show();
 
     async function get() {
       await fetch("https://api.umamisushibot.uz/get/order", {
@@ -208,6 +208,8 @@ const Payment = () => {
     let dist = Math.round(calcDistance(sCoords, dCoords));
     let res = dist * kmSum + startSum;
     setDeliveryPrice(res);
+    tg.MainButton.show();
+
   }
 
   getDeliveryPrice();
