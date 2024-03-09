@@ -21,8 +21,8 @@ const Payment = () => {
   };
 
   async function getDeliveryPrice() {
-    let startSum = 10000;
-    let kmSum = 2000;
+    let startSum = 25000;
+    let kmSum = 0;
 
     let location = await fetch(
       `https://api.umamisushibot.uz/user_location/${cart.user_id}`,
@@ -65,8 +65,8 @@ const Payment = () => {
     }
 
     let sCoords = {
-      latitude: 41.302626,
-      longitude: 69.279813,
+      latitude: 41.325794,
+      longitude: 69.282398,
     };
 
     let dCoords = {
