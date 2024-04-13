@@ -268,14 +268,14 @@ const Payment = () => {
           >
             Click
           </button>
-          {/* <button 
+          <button 
             className={typePayment == "Payme" ? "payme" : "payme-notactive"}
             onClick={() => {
               setTypePayment("Payme");
             }}
           >
             Payme
-          </button> */}
+          </button>
 
         </div>
         <div className="promocode">
