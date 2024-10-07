@@ -21,7 +21,7 @@ const OrderFooter = ({ total, price }) => {
   }, []);
 
   async function getDeliveryPrice() {
-    let startSum = 25000;
+    let startSum = 30000;
     let kmSum = 0;
 
     let location = await fetch(
@@ -65,8 +65,8 @@ const OrderFooter = ({ total, price }) => {
     }
 
     let sCoords = {
-      latitude: 41.325794,
-      longitude: 69.282398,
+      latitude: 41.308240,
+      longitude: 69.268835,
     };
 
     let dCoords = {
