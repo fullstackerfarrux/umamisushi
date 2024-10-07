@@ -21,7 +21,7 @@ const Payment = () => {
   };
 
   async function getDeliveryPrice() {
-    let startSum = 25000;
+    let startSum = 30000;
     let kmSum = 0;
 
     let location = await fetch(
