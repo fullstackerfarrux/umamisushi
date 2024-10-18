@@ -89,7 +89,6 @@ const OrderFooter = ({ total, price }) => {
             <h2>К оплате:</h2>
             <div className="footer_text">
               <h3>Подитог</h3>
-              {cart}
               <p>{cart.undiscount.toLocaleString()} сум</p>
             </div>
             <div className="footer_text">
