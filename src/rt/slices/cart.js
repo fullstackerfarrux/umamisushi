@@ -2,8 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 const cartLocale = localStorage.getItem("cart");
 const cartStorage = JSON.parse(cartLocale);
 
-
-
 const initialState = {
   items: cartStorage !== null ? cartStorage.items : [],
   total: cartStorage !== null ? cartStorage.total : 0,
@@ -66,6 +64,11 @@ const cartSlice = createSlice({
         : action.payload.price;
 
       state.undiscount -= +action.payload.price;
+
+      if (state.items.length === 0) {
+        state.total = 0;
+        state.undiscount = 0;
+      }
     },
 
     removeFromProduct(state, action) {
@@ -78,6 +81,11 @@ const cartSlice = createSlice({
         : +action.payload.product.price * +action.payload.count;
 
       state.undiscount -= +action.payload.product.price * +action.payload.count;
+
+      if (state.items.length === 0) {
+        state.total = 0;
+        state.undiscount = 0;
+      }
     },
 
     addUserId(state, action) {
