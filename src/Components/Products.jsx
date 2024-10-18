@@ -13,18 +13,7 @@ const Products = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { cart } = useSelector((cart) => cart);
-  const APP_VERSION = '1.0.2';
-  const savedVersion = localStorage.getItem('app_version');
-  if (savedVersion !== APP_VERSION) {
-    // Clear localStorage if the version has changed
-    localStorage.clear();
-
-    // Store the new version to prevent clearing on every load
-    localStorage.setItem('app_version', APP_VERSION);
-  }
-  else {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }
+  localStorage.setItem("cart", JSON.stringify(cart));
 
   const [line, setLine] = useState("");
   const [products, setProducts] = useState([]);
