@@ -1,15 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 const cartLocale = localStorage.getItem("cart");
 const cartStorage = JSON.parse(cartLocale);
-const APP_VERSION = '1.0.1';
-const savedVersion = localStorage.getItem('app_version');
-if (savedVersion !== APP_VERSION) {
-  // Clear localStorage if the version has changed
-  localStorage.clear();
 
-  // Store the new version to prevent clearing on every load
-  localStorage.setItem('app_version', APP_VERSION);
-}
 
 
 const initialState = {
