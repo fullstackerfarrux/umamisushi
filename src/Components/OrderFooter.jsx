@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const OrderFooter = ({ total, price }) => {
   const dispatch = useDispatch();
-  const { cart } = useSelector((cart) => cart);
+  const { cart } = useSelector((state) => state);
   const [delivery, setDelivery] = useState();
   const [deliveryPrice, setDeliveryPrice] = useState(0);
 
