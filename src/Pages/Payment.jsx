@@ -21,7 +21,12 @@ const Payment = () => {
   };
 
   async function getDeliveryPrice() {
-    let startSum = 30000;
+    let startSum = await fetch("https://api.umamisushibot.uz/delivery", {
+      method: "GET",
+      cache: "no-store",
+    })
+      .then((res) => res.json())
+      .then((data) => data.msg.delivery_price);
     let kmSum = 0;
 
     let location = await fetch(
