@@ -12,6 +12,7 @@ const OrderFooter = ({ total, price }) => {
     async function get() {
       await fetch("https://api.umamisushibot.uz/delivery", {
         method: "GET",
+        cache: "no-store",
       })
         .then((res) => res.json())
         .then((data) => setDelivery(data.msg));
